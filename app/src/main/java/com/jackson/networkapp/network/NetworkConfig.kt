@@ -36,4 +36,11 @@ object NetworkConfig {
             "https://api.example.com/"
         }
     }
+    
+    /**
+     * 获取GitHub API基础URL
+     */
+    fun getGitHubBaseUrl(): String {
+        return "https://api.github.com/"
+    }
 } 

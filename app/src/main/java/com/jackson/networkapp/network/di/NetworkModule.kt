@@ -2,6 +2,7 @@ package com.jackson.networkapp.network.di
 
 import com.jackson.networkapp.network.NetworkConfig
 import com.jackson.networkapp.network.api.ApiService
+import com.jackson.networkapp.network.api.GitHubApiService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -57,9 +58,9 @@ object NetworkModule {
     /**
      * 创建Retrofit实例
      */
-    private fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
+    private fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson, baseUrl: String): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(NetworkConfig.getBaseUrl())
+            .baseUrl(baseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -69,6 +70,21 @@ object NetworkModule {
      * 提供API服务实例
      */
     val apiService: ApiService by lazy {
-        provideRetrofit(provideOkHttpClient(), provideGson()).create(ApiService::class.java)
+        provideRetrofit(
+            provideOkHttpClient(), 
+            provideGson(),
+            NetworkConfig.getBaseUrl()
+        ).create(ApiService::class.java)
+    }
+    
+    /**
+     * 提供GitHub API服务实例
+     */
+    val gitHubApiService: GitHubApiService by lazy {
+        provideRetrofit(
+            provideOkHttpClient(), 
+            provideGson(),
+            NetworkConfig.getGitHubBaseUrl()
+        ).create(GitHubApiService::class.java)
     }
 } 
