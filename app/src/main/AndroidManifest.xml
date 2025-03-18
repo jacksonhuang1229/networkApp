@@ -16,6 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NetworkApp"
         tools:targetApi="31">
+        
+        <activity
+            android:name=".RepoListActivity"
+            android:exported="false"
+            android:label="GitHub仓库列表"
+            android:parentActivityName=".MainActivity" />
+            
         <activity
             android:name=".MainActivity"
             android:exported="true"

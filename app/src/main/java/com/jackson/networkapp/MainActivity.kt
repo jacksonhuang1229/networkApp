@@ -1,5 +1,6 @@
 package com.jackson.networkapp
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -36,14 +37,11 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // 使用悬浮按钮触发GitHub API请求
+        // 修改FAB点击事件，跳转到RepoListActivity
         binding.fab.setOnClickListener { view ->
-            // 调用GitHub API获取仓库列表（这里使用octocat作为示例用户名）
-            viewModel.loadGitHubRepositories("")
-            
-            Snackbar.make(view, "正在加载GitHub仓库...", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+            // 创建Intent并启动RepoListActivity
+            val intent = Intent(this, RepoListActivity::class.java)
+            startActivity(intent)
         }
         
         // 观察GitHub仓库数据
